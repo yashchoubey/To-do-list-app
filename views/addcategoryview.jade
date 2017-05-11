@@ -1,0 +1,19 @@
+md-dialog(ng-form='taskDataForm')
+   md-toolbar.md-accent
+      .md-toolbar-tools
+         h2 Add Category
+   md-dialog-content
+      .md-dialog-content
+         div(layout='row')
+            md-input-container
+               label Category Name
+               input(md-maxlength='10',required,name='categoryName',ng-model='addCategoryCtrl.categoryName',ng-change='addCategoryCtrl.checkDuplicate(addCategoryCtrl.categoryName)')
+               div(ng-messages='taskDataForm.categoryName.$error')
+                  div(ng-message='required') This is required.
+                  div(ng-message='md-maxlength') CategoryName is too long.
+                  div(ng-show='taskDataForm.categoryName.$error') {{addCategoryCtrl.message}}
+
+      md-dialog-actions(layout='row')
+         md-button.md-flat(ng-click='addCategoryCtrl.save()',ng-disabled='taskDataForm.$invalid') Save
+         md-button.md-flat(ng-click='addCategoryCtrl.cancel()') Discard
+

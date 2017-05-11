@@ -1,0 +1,102 @@
+
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic"/>
+    <link rel="stylesheet" href="css/index.css"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+  </head>
+  <body ng-app="toDoList" ng-cloak="">
+    <div>
+      <div ng-controller="sideNavController as sideNavCtrl">
+        <md-content>
+          <md-toolbar class="md-primary toolBar flex">
+            <div layout="row" layout-align="start center">
+              <div ng-mouseover="sideNavCtrl.toggleLeft()" style="padding-Left:10px" class="md-primary md-hue-1"><i class="material-icons md-36 list">dehaze</i></div>
+              <div style="padding-Left:10px" class="md-primary md-hue-1">
+                <h3>ToDo Lists</h3>
+              </div>
+            </div>
+          </md-toolbar>
+        </md-content>
+        <div>
+          <section layout="row" flex="">
+            <md-sidenav md-component-id="left" class="md-sidenav-left layout-column">
+              <md-toolbar style="padding-left:5px">
+                <h3>Task List</h3>
+              </md-toolbar>
+              <md-content layout-margin="" class="layout-column">
+                <div style="overflow:auto" class="layout-column">
+                  <div ng-repeat="(key,value) in sideNavCtrl.category" style="padding-left:10px" class="hover-effect layout-row">
+                    <md-checkbox aria-label="Checkbox" ng-model="sideNavCtrl.category[key]" class="flex">{{key}}</md-checkbox>
+                    <div layout="row">
+                      <md-button layout="row" ng-click="sideNavCtrl.deleteCategory(key)" class="md-icon-button">
+                        <div class="i material-icons delete-button">clear</div>
+                      </md-button>
+                    </div>
+                  </div>
+                  <div>
+                    <md-button ng-click="sideNavCtrl.addCategory($event)" class="md-primary md-raised">add category</md-button>
+                  </div>
+                </div>
+              </md-content>
+            </md-sidenav>
+          </section>
+        </div>
+      </div>
+      <div ng-controller="toDoListController as toDoListCtrl">
+        <md-content flex="" layout-padding="">
+          <div layout-align="end end" ng-cloak="" flex="33" class="md-fab">
+            <div flex="33">
+              <md-button ng-click="toDoListCtrl.addTask($event)" class="md-fab fabbtn"><i class="material-icons">add</i></md-button>
+              <md-card class="card1">
+                <div>
+                  <div ng-repeat="taskobj in toDoListCtrl.taskList" ng-if="toDoListCtrl.category[taskobj.category]===true">{{taskobj}}
+                    <md-card-content>
+                      <div layout="row">
+                        <md-checkbox ng-model="strike" aria-label="task check"></md-checkbox>
+                        <div class="flex title">
+                          <div ng-class="{text: strike}" class="md-subhead">{{taskobj.title}}</div>
+                          <div layout="row">
+                            <div class="md-body-1 category">{{taskobj.category}}</div>
+                            <div ng-class="{text: strike}" class="md-body-1">{{taskobj.description}}</div>
+                          </div>
+                        </div>
+                        <div layout="row" layout-align="end center">
+                          <div>
+                            <div class="flex">Task Date: {{taskobj.date | date:'MM-dd'}}</div>
+                            <div class="flex duedate">Due Date:{{taskobj.dueDate | date:'MM-dd'}}</div>
+                          </div>
+                          <md-button ng-click="toDoListCtrl.deleteTask(taskobj)" class="md-icon-button dlticon">
+                            <div class="i material-icons">delete</div>
+                          </md-button>
+                        </div>
+                      </div>
+                    </md-card-content>
+                    <md-divider></md-divider>
+                  </div>
+                </div>
+              </md-card>
+            </div>
+          </div>
+        </md-content>
+      </div>
+    </div>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.js"></script>
+    <!--*************************material design library*******************************************//-->
+    <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.js"></script>
+    <!--*************************angularJS app files*******************************************//-->
+    <script type="text/javascript" src="js/app.js"></script>
+    <!--*************************angularJS controller files*******************************************//-->
+    <script type="text/javascript" src="js/todolistcontroller.js"></script>
+    <script type="text/javascript" src="js/sidenavcontroller.js"></script>
+    <script type="text/javascript" src="js/addcategorycontroller.js"></script>
+    <script type="text/javascript" src="js/addtaskcontoller.js"></script>
+    <!--*************************angularJS service files*******************************************//-->
+    <script type="text/javascript" src="js/toDoListService.js"></script>
+  </body>
+</html>

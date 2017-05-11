@@ -1,0 +1,45 @@
+
+<md-dialog ng-form="taskDataForm">
+  <md-toolbar class="md-accent">
+    <div class="md-toolbar-tools">
+      <h2>Add Task</h2>
+    </div>
+  </md-toolbar>
+  <md-dialog-content>
+    <div class="md-dialog-content">
+      <div layout="row">
+        <md-input-container>
+          <label>Task Title</label>
+          <input required="required" name="title" ng-model="addTaskCtrl.taskData.title"/>
+          <div ng-messages="taskDataForm.title.$error">
+            <div ng-message="required">This is required.</div>
+          </div>
+        </md-input-container>
+        <md-input-container flex-gt-sm="" class="md-block">
+          <label>Category</label>
+          <md-select required="required" name="category" ng-model="addTaskCtrl.taskData.category">
+            <md-option ng-repeat="(key,value) in addTaskCtrl.category" value="{{key}}">{{key}}</md-option>
+          </md-select>
+          <div ng-messages="taskDataForm.addTaskCtrl.$error">
+            <div ng-message="required">This is required.</div>
+          </div>
+        </md-input-container>
+        <md-input-container>
+          <label>Enter due date</label>
+          <md-datepicker datetime="yyyy-MM-dd HH:mm:ss" ng-model="addTaskCtrl.taskData.dueDate" name="date" md-min-date="addTaskCtrl.todayDate"></md-datepicker>
+          <div ng-messages="taskDataForm.date.$error">
+            <div ng-message="required">This is required.</div>
+          </div>
+        </md-input-container>
+      </div>
+      <md-input-container flex-gt-sm="" class="md-block">
+        <label>Task description</label>
+        <input ng-model="addTaskCtrl.taskData.description"/>
+      </md-input-container>
+    </div>
+    <md-dialog-actions layout="row">
+      <md-button ng-click="addTaskCtrl.save()" ng-disabled="taskDataForm.$invalid" class="md-flat">Save</md-button>
+      <md-button ng-click="addTaskCtrl.cancel()" class="md-flat">Discard</md-button>
+    </md-dialog-actions>
+  </md-dialog-content>
+</md-dialog>

@@ -1,0 +1,33 @@
+application: engineapp
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: yes
+
+handlers:
+- url: /favicon\.ico
+  static_files: favicon.ico
+  upload: favicon\.ico
+
+- url: /(.*\.svg)
+  static_files: \1
+  upload: (.*\.svg)
+  mime_type: image/svg+xml  
+
+  
+- url: /(.*\.(js|css|html|ico|png|svg|ttf|jpg|jpeg|xml|woff))$
+  static_files: \1
+  upload: (.*\.(js|css|html|ico|png|svg|ttf|jpg|jpeg|xml|woff))$
+  http_headers:
+   expiration: "0d 03m"
+
+- url: /todo-list.*
+  script: py.main.app
+  
+- url: .*
+  upload: index.html
+  static_files: index.html
+  
+libraries:
+- name: webapp2
+  version: "2.5.2"

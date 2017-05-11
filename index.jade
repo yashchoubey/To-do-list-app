@@ -1,0 +1,72 @@
+html(lang='en')
+    head
+        meta(name='viewport', content='width=device-width, initial-scale=1')
+        link(rel='stylesheet', href='http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css')
+        link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic")
+        link(rel='stylesheet', href='css/index.css')
+        link(href='https://fonts.googleapis.com/icon?family=Material+Icons', rel='stylesheet')
+    body(ng-app='toDoList', ng-cloak='')
+        div
+            div(ng-controller='sideNavController as sideNavCtrl')
+                md-content
+                    md-toolbar.md-primary.toolBar.flex
+                        div(layout='row',layout-align='start center')
+                            div.md-primary.md-hue-1(ng-mouseover='sideNavCtrl.toggleLeft()',style='padding-Left:10px')
+                                i.material-icons.md-36.list dehaze
+                            div.md-primary.md-hue-1(style='padding-Left:10px')
+                                h3 ToDo Lists
+                div
+                    section(layout='row', flex='')
+                        md-sidenav.md-sidenav-left.layout-column(md-component-id='left')
+                            md-toolbar(style="padding-left:5px")
+                                h3 Task List
+                            md-content.layout-column(layout-margin='',)
+                                div.layout-column(style="overflow:auto")
+                                    div.hover-effect.layout-row(ng-repeat="(key,value) in sideNavCtrl.category",style="padding-left:10px")
+                                            md-checkbox.flex(aria-label='Checkbox',ng-model="sideNavCtrl.category[key]") {{key}}
+                                            div(layout='row')
+                                                md-button.md-icon-button(layout='row',ng-click='sideNavCtrl.deleteCategory(key)')
+                                                    .i.material-icons.delete-button clear
+                                    div
+                                        md-button.md-primary.md-raised(ng-click='sideNavCtrl.addCategory($event)') add category
+            div(ng-controller='toDoListController as toDoListCtrl')
+                md-content(flex='', layout-padding='')
+                    div(layout-align='end end', ng-cloak='',flex='33').md-fab
+                        div(flex='33')
+                            md-button.md-fab(ng-click='toDoListCtrl.addTask($event)').fabbtn
+                                i.material-icons add
+                            md-card.card1
+                                div
+                                    div(ng-repeat='taskobj in toDoListCtrl.taskList',ng-if="toDoListCtrl.category[taskobj.category]===true")
+                                        | {{taskobj}}
+                                        md-card-content
+                                                div(layout='row')
+                                                    md-checkbox(ng-model="strike",aria-label='task check')
+                                                    div.flex.title
+                                                        div.md-subhead(ng-class="{text: strike}") {{taskobj.title}}
+                                                        div(layout='row')
+                                                            div.md-body-1.category {{taskobj.category}}
+                                                            div.md-body-1(ng-class="{text: strike}") {{taskobj.description}}
+                                                    div(layout='row',layout-align="end center")
+                                                        div
+                                                            .flex Task Date: {{taskobj.date | date:'MM-dd'}}
+                                                            .flex.duedate Due Date:{{taskobj.dueDate | date:'MM-dd'}}
+                                                        md-button.md-icon-button.dlticon(ng-click='toDoListCtrl.deleteTask(taskobj)')
+                                                            .i.material-icons delete
+                                        md-divider
+
+        script(src='http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js')
+        script(src='http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.js')
+        script(src='http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.js')
+        script(src='http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.js')
+        //*************************material design library*******************************************//
+        script(src='http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.js')
+        //*************************angularJS app files*******************************************//
+        script(type='text/javascript',src='js/app.js')
+        //*************************angularJS controller files*******************************************//
+        script(type='text/javascript',src='js/todolistcontroller.js')
+        script(type='text/javascript',src='js/sidenavcontroller.js')
+        script(type='text/javascript',src='js/addcategorycontroller.js')
+        script(type='text/javascript',src='js/addtaskcontoller.js')
+        //*************************angularJS service files*******************************************//
+        script(type='text/javascript',src='js/toDoListService.js')

@@ -1,0 +1,32 @@
+md-dialog(ng-form='taskDataForm')
+   md-toolbar.md-accent
+      .md-toolbar-tools
+         h2 Add Task
+   md-dialog-content
+      .md-dialog-content
+         div(layout='row')
+            md-input-container
+               label Task Title
+               input(required, name='title',ng-model='addTaskCtrl.taskData.title')
+               div(ng-messages='taskDataForm.title.$error')
+                  div(ng-message='required') This is required.
+            md-input-container.md-block(flex-gt-sm='')
+               label Category
+               md-select(required, name='category',ng-model='addTaskCtrl.taskData.category')
+                  md-option(ng-repeat='(key,value) in addTaskCtrl.category', value='{{key}}')
+                     | {{key}}
+               div(ng-messages='taskDataForm.addTaskCtrl.$error')
+                  div(ng-message='required') This is required.
+            md-input-container
+               label Enter due date
+               md-datepicker(datetime="yyyy-MM-dd HH:mm:ss",ng-model='addTaskCtrl.taskData.dueDate',name='date', md-min-date="addTaskCtrl.todayDate")
+               div(ng-messages='taskDataForm.date.$error')
+                  div(ng-message='required') This is required.
+         md-input-container.md-block(flex-gt-sm='')
+            label Task description
+            input(ng-model='addTaskCtrl.taskData.description')
+      md-dialog-actions(layout='row')
+            md-button.md-flat(ng-click='addTaskCtrl.save()',ng-disabled='taskDataForm.$invalid') Save
+            md-button.md-flat(ng-click='addTaskCtrl.cancel()') Discard
+
+

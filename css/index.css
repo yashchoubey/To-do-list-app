@@ -1,0 +1,41 @@
+h3 {
+  color: #ffefd5;
+}
+.material-icons.md-36.list {
+  font-size: 36px;
+  color: #ffefd5;
+}
+.fabbtn {
+  position: fixed;
+  right: 24px;
+  top: 40px;
+  color: #795548;
+}
+.dlticon {
+  padding-left: 16px;
+}
+.duedate {
+  color: #f00;
+  font-size: 75%;
+}
+.text {
+  text-decoration: line-through;
+}
+.category {
+  color: #808080;
+  background-color: #d3d3d3;
+  margin-right: 7px;
+  font-size: smaller;
+}
+.toolBar {
+  position: fixed;
+}
+.card1 {
+  margin-top: 75px;
+}
+.hover-effect .delete-button {
+  display: none;
+}
+.hover-effect:hover .delete-button {
+  display: block;
+}

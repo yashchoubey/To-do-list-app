@@ -1,0 +1,27 @@
+
+<md-dialog ng-form="taskDataForm">
+  <md-toolbar class="md-accent">
+    <div class="md-toolbar-tools">
+      <h2>Add Category</h2>
+    </div>
+  </md-toolbar>
+  <md-dialog-content>
+    <div class="md-dialog-content">
+      <div layout="row">
+        <md-input-container>
+          <label>Category Name</label>
+          <input md-maxlength="10" required="required" name="categoryName" ng-model="addCategoryCtrl.categoryName" ng-change="addCategoryCtrl.checkDuplicate(addCategoryCtrl.categoryName)"/>
+          <div ng-messages="taskDataForm.categoryName.$error">
+            <div ng-message="required">This is required.</div>
+            <div ng-message="md-maxlength">CategoryName is too long.</div>
+            <div ng-show="taskDataForm.categoryName.$error">{{addCategoryCtrl.message}}</div>
+          </div>
+        </md-input-container>
+      </div>
+    </div>
+    <md-dialog-actions layout="row">
+      <md-button ng-click="addCategoryCtrl.save()" ng-disabled="taskDataForm.$invalid" class="md-flat">Save</md-button>
+      <md-button ng-click="addCategoryCtrl.cancel()" class="md-flat">Discard</md-button>
+    </md-dialog-actions>
+  </md-dialog-content>
+</md-dialog>
