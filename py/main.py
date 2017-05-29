@@ -44,6 +44,18 @@ class MainHandler(webapp2.RequestHandler):
 			response_json = {"success":"false"}
 			
 		self.response.out.write(json.dumps(response_json))
+
+class ToDoListHandler(webapp2.RequestHandler):
+    def get(self):
+    	todolist=[]
+    	list1=categoryItems.getSelectedCategoryItem()
+    	for obj in list1:
+    		todolist.append(taskItems.getItem(obj))
+    		return todolist
+
+    def put(self,**kwargs):
+    	taskItems.addItem(self.request.get("name"),self.request.get("category"),self.request.get("description"),self.request.get("completed"),self.request.get("dateTime"))
+
 		
 
 app = webapp2.WSGIApplication([

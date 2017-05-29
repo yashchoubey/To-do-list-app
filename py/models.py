@@ -51,3 +51,8 @@ class categoryItems(ndb.Model):
 	def getCategoryItem(self):
 		obj=self.query()
 		return obj
+
+	@classmethod
+	def getSelectedCategoryItem(self):
+		obj=self.query(isSelected=True).fetch()
+		return obj
