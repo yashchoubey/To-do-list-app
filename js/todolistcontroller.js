@@ -1,5 +1,5 @@
 
-angular.module('toDoList').controller('toDoListController',["$mdDialog","toDoService", function ($mdDialog,toDoService) {
+angular.module('toDoList').controller('toDoListController',["$mdDialog","toDoService","$http", function ($mdDialog,toDoService,$http) {
     /************************************** view *********************************************/
     var self = this;
     self.deleteTask = function(ev) {
@@ -34,9 +34,16 @@ angular.module('toDoList').controller('toDoListController',["$mdDialog","toDoSer
             clickOutsideToClose: true
         })
             .then(function (taskData) {
+                console.log(taskData)
+                console.log(taskData.title)
+                var sendJSON = {};
+                sendJSON.name=taskData.title;
+                sendJSON.category=taskData.category;
+                sendJSON.dateTime=taskData.dueDate;
+                sendJSON.description=taskData.description;
+                //sendJSON.userName=username;
+                $http.put('/todo/todolist', sendJSON).then(function (response) {console.log("task added");initController();});
 
-                self.taskList.push(taskData);
-                self.taskList.date=new Date();
             }, function () {
                 self.status = 'Task is discarded.';
             });
@@ -44,6 +51,15 @@ angular.module('toDoList').controller('toDoListController',["$mdDialog","toDoSer
     function deleteTask(taskobj){
         var index = self.taskList.indexOf(taskobj);
         self.taskList.splice(index, 1);
+
+        console.log(taskobj)
+        var sendJSON = {};
+        sendJSON.categoryName=categoryKey;
+        //sendJSON.userName=username;
+        $http.delete('/todo/todolist', {params: sendJSON}).then(function (response) {console.log("deleted");initController();});
+
+
+
     }
     initController();
 }])

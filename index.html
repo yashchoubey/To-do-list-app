@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic"/>
     <link rel="stylesheet" href="css/index.css"/>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <meta name="google-signin-client_id" content="454340410018-uahnaa9lv6rfld1jusi0as152sr2207o.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
   </head>
   <body ng-app="toDoList" ng-cloak="">
     <div>
@@ -15,8 +17,9 @@
             <div layout="row" layout-align="start center">
               <div ng-mouseover="sideNavCtrl.toggleLeft()" style="padding-Left:10px" class="md-primary md-hue-1"><i class="material-icons md-36 list">dehaze</i></div>
               <div style="padding-Left:10px" class="md-primary md-hue-1">
-                <h3>ToDo Lists</h3>
+                <h3>ToDo List</h3>
               </div>
+              
             </div>
           </md-toolbar>
         </md-content>
@@ -52,7 +55,7 @@
               <md-button ng-click="toDoListCtrl.addTask($event)" class="md-fab fabbtn"><i class="material-icons">add</i></md-button>
               <md-card class="card1">
                 <div>
-                  <div ng-repeat="taskobj in toDoListCtrl.taskList" ng-if="toDoListCtrl.category[taskobj.category]===true">{{taskobj}}
+                  <div ng-repeat="taskobj in toDoListCtrl.taskList" ng-if="toDoListCtrl.category[taskobj.category]===true">
                     <md-card-content>
                       <div layout="row">
                         <md-checkbox ng-model="strike" aria-label="task check"></md-checkbox>
@@ -92,6 +95,23 @@
           </md-input-container>
           <md-button class="md-raised md-primary">Primary</md-button>
         </form>
+        <div class="g-signin2" data-onsuccess="onSignIn"></div>
+        <script type="text/javascript">
+          function onSignIn(googleUser) {
+            var profile = googleUser.getBasicProfile();
+            console.log('Name: ' + profile.getName());
+          }
+        </script>
+
+        <a href="#" onclick="signOut();">Sign out</a>
+        <script>
+          function signOut() {
+            var auth2 = gapi.auth2.getAuthInstance();
+            auth2.signOut().then(function () {
+              console.log('User signed out.');
+            });
+          }
+        </script>
       </div>
     </div>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js"></script>

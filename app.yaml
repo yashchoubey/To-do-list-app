@@ -1,6 +1,6 @@
 runtime: python27
 api_version: 1
-threadsafe: yes
+threadsafe: true
 
 handlers:
 - url: /favicon\.ico
@@ -19,9 +19,9 @@ handlers:
   http_headers:
    expiration: "0d 03m"
 
-- url: /todo-list.*
-  script: py.main.app
-  
+- url: /todo.*
+  script: py.urls.application
+
 - url: .*
   upload: index.html
   static_files: index.html

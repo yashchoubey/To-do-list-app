@@ -1,33 +1,9 @@
-
 angular.module('toDoList')
-    .factory('toDoService',function($q){
+    .factory('toDoService',function($q,$http){
     /************************************** view *********************************************/
     var self = this;
     /************************************** model *********************************************/
-   var category = {'Lunch':true,'Movies':false,'Grocery':false,'Shopping':false,'Rent':false};
-    var taskList = [
-        {
-        title: 'title',
-        description: 'description',
-        category: 'Lunch',
-        dueDate: new Date(),
-        date: new Date()
-        },
-        {
-        title: 'title1',
-        description: 'description1',
-        category: 'Movies',
-        dueDate: new Date(),
-        date: new Date()
-        },
-        {
-        title: 'title2',
-        description: 'description2',
-        category: 'Lunch',
-        dueDate: new Date(),
-        date: new Date()
-        }
-    ];
+    
     var taskData = {
         title: '',
         description: '',
@@ -38,10 +14,10 @@ angular.module('toDoList')
     /************************************** controller *********************************************/
     return {
         getCategory:function(){
-            return $q.when(category);
+            return $http.get('/todo/category').then(function (response) {return response.data;});
         },
         getTaskList: function () {
-            return $q.when(taskList);
+            return $http.get('/todo/todolist').then(function (response) {return response.data;});
         },
         getTaskData: function () {
             return $q.when(taskData);

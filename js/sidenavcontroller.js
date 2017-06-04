@@ -1,5 +1,5 @@
 
-angular.module('toDoList').controller('sideNavController',["$mdSidenav","$mdDialog","toDoService", function ($mdSidenav,$mdDialog,toDoService) {
+angular.module('toDoList').controller('sideNavController',["$mdSidenav","$mdDialog","toDoService","$http", function ($mdSidenav,$mdDialog,toDoService,$http) {
     /************************************** view *********************************************/
     var self=this;
     self.deleteCategory = function(categoryKey) {
@@ -27,7 +27,11 @@ angular.module('toDoList').controller('sideNavController',["$mdSidenav","$mdDial
         }
     }
     function deleteCategory(categoryKey){
-        delete self.category[categoryKey];
+        //delete self.category[categoryKey];
+        var sendJSON = {};
+        sendJSON.categoryName=categoryKey;
+        //sendJSON.userName=username;
+        $http.delete('/todo/category', {params: sendJSON}).then(function (response) {console.log("deleted");initController();});
     }
     function addCategory(ev){
         $mdDialog.show({
@@ -39,18 +43,11 @@ angular.module('toDoList').controller('sideNavController',["$mdSidenav","$mdDial
             clickOutsideToClose: true
         })
             .then(function (categoryName) {
-                if (self.category[categoryName] === undefined) {
-                    self.category[categoryName] = false;
-                }
-                else
-                {
-                                //$mdDialog.show(
-                                //    $mdDialog.alert()
-                                //        .clickOutsideToClose(true)
-                                //        .textContent('category is already defined.')
-                                //        .ok('Got it!')
-                                //);
-                }
+                var sendJSON = {};
+                sendJSON.categoryName=categoryName;
+                //sendJSON.userName=username;
+                //$http.post('/todo/category', {params: sendJSON}).then(function (response) {console.log("added");initController();});
+                $http.post('/todo/category?categoryName='+categoryName).then(function (response) {console.log("added");initController();});
             }, function () {
             });
     }
