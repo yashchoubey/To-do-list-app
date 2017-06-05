@@ -11,7 +11,7 @@ angular.module('toDoList').controller('toDoListController',["$mdDialog","toDoSer
     /************************************** model *********************************************/
     self.taskList=[];
     self.category =[];
-    self.todayDate=new Date();
+    //self.todayDate=new Date();
     /************************************** controller *********************************************/
     function initController(){
         self.showLoader=true;
@@ -34,14 +34,12 @@ angular.module('toDoList').controller('toDoListController',["$mdDialog","toDoSer
             clickOutsideToClose: true
         })
             .then(function (taskData) {
-                console.log(taskData)
-                console.log(taskData.title)
                 var sendJSON = {};
                 sendJSON.name=taskData.title;
                 sendJSON.category=taskData.category;
-                sendJSON.dateTime=taskData.dueDate;
+                console.log(taskData.dueDate)
+                sendJSON.dueDate=taskData.dueDate;
                 sendJSON.description=taskData.description;
-                //sendJSON.userName=username;
                 $http.put('/todo/todolist', sendJSON).then(function (response) {console.log("task added");initController();});
 
             }, function () {
@@ -54,12 +52,13 @@ angular.module('toDoList').controller('toDoListController',["$mdDialog","toDoSer
 
         console.log(taskobj)
         var sendJSON = {};
-        sendJSON.categoryName=categoryKey;
-        //sendJSON.userName=username;
-        $http.delete('/todo/todolist', {params: sendJSON}).then(function (response) {console.log("deleted");initController();});
-
-
-
+        sendJSON.name=taskobj.name;
+        sendJSON.category=taskobj.category;
+        sendJSON.dueDate=taskobj.dueDate;
+        sendJSON.description=taskobj.description;
+        sendJSON.completed=taskobj.completed;
+        console.log(sendJSON)
+        $http.post('/todo/todolist', sendJSON).then(function (response) {console.log("deleted");initController();});
     }
     initController();
 }])

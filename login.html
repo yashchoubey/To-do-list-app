@@ -3,11 +3,41 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Angular Material style sheet -->
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <meta name="google-signin-client_id" content="454340410018-uahnaa9lv6rfld1jusi0as152sr2207o.apps.googleusercontent.com">
 </head>
-<body ng-app="BlankApp" ng-cloak>
-  <!--
-    Your HTML content here
-  -->  
+<body layout="column" layout-align="center center" background="full_2.jpg" ng-app="BlankApp" ng-cloak>
+  <div background="full_2.jpg" style="background-color: white">
+    <b>Welcome</b>
+    <!-- <form name="twoStepVerificationFormQR" action="/happierSSO/sso/noQRPage" method="POST" >
+      <md-input-container>
+        <label>Enter Query</label>
+        <input ng-model="user.title">
+      </md-input-container>
+      <md-button class="md-raised md-primary">Primary</md-button>
+    </form> -->
+    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+    <script type="text/javascript">
+      function onSignIn(googleUser) {
+        var profile = googleUser.getBasicProfile();
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("GET", "/todo/main?userEmail="+profile.getEmail() , true);
+        xhttp.send();
+      }
+
+    </script>
+
+    <a href="#" onclick="signOut();">Sign out</a>
+    <script>
+      function signOut() {
+        var auth2 = gapi.auth2.getAuthInstance();
+        auth2.signOut().then(function () {
+          console.log('User signed out.');
+        });
+      }
+    </script>
+  </div>  
+
   
   <!-- Angular Material requires Angular.js Libraries -->
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>

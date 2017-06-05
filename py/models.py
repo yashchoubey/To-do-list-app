@@ -3,32 +3,13 @@ import logging
 from datetime import datetime
 
 class taskItems(ndb.Model):
+	
 	name = ndb.StringProperty()
 	category = ndb.StringProperty()
 	description = ndb.StringProperty()
 	completed = ndb.BooleanProperty(default=False)
-	dateTime = ndb.DateTimeProperty(auto_now=True)
-
-	@classmethod
-	def addItem(self, name, category, description, dateTime):
-		logging.info(category,name,description)
-		obj=self(name=name, category=category, description=description, dateTime=dateTime)
-		obj.put()
-
-	@classmethod
-	def deleteItem(self, name, category, description, completed, dateTime):
-		obj=self.query(ndb.AND(name==name, category==category, description==description, completed==completed, dateTime==dateTime)).order(-dateTime)
-		obj.key.delete()
-
-	@classmethod#select/deselect items completed
-	def completeItem(self, name, category, description, completed, dateTime):
-		obj=self.query(ndb.AND(name==name, category==category, description==description, dateTime==dateTime))
-		
-		if obj.completed:
-			obj.completed=False
-		else:
-			obj.completed=True
-		obj.put()
+	dueDate = ndb.DateProperty(auto_now=False)
+	userEmail=ndb.StringProperty(default="yashchoubey@gmail.com")
 
 	@classmethod
 	def getItem(self):
@@ -40,13 +21,38 @@ class taskItems(ndb.Model):
 			dict_obj["category"] = obj.category
 			dict_obj["description"] = obj.description
 			dict_obj["completed"] = obj.completed
-			#dict_obj["dateTime"] = string(obj.dateTime)
+			dict_obj["dueDate"] = str(obj.dueDate)
 			returnList.append(dict_obj)
 		return returnList
+
+	@classmethod
+	def addItem(self, name, category, description, dueDate):
+		obj=self(name=name, category=category, description=description, dueDate=dueDate)
+		obj.put()
+
+	@classmethod
+	def deleteItem(self, name, category, description,dueDate, completed):
+		obj=taskItems.query(ndb.AND(taskItems.name==name, taskItems.category==category, taskItems.description==description,taskItems.dueDate==dueDate, taskItems.completed==completed)).get()
+		
+		if obj:
+			obj.key.delete()
+
+	@classmethod#select/deselect items completed
+	def completeItem(self, name, category, description, dateTime, completed):
+		obj=self.query(ndb.AND(name==name, category==category, description==description, dateTime==dateTime))
+		if obj:
+			if obj.completed:
+				obj.completed=False
+			else:
+				obj.completed=True
+			obj.put()
+
+	
 	
 class categoryItems(ndb.Model):
 	categoryName= ndb.StringProperty()
 	isSelected = ndb.BooleanProperty(default=True)
+	userEmail=ndb.StringProperty(default="yashchoubey@gmail.com")
 
 	@classmethod
 	def getCategoryItem(self):
@@ -66,7 +72,6 @@ class categoryItems(ndb.Model):
 
 	@classmethod
 	def deleteItem(self, categoryName):
-		logging.info(categoryName)
 		obj=categoryItems.query(categoryItems.categoryName==categoryName).get()
 
 		if obj:

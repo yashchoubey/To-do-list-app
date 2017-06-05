@@ -26,7 +26,7 @@
         </md-input-container>
         <md-input-container>
           <label>Enter due date</label>
-          <md-datepicker datetime="yyyy-MM-dd HH:mm:ss" ng-model="addTaskCtrl.taskData.dueDate" name="date" md-min-date="addTaskCtrl.todayDate"></md-datepicker>
+          <md-datepicker datetime="yyyy-MM-dd" ng-model="addTaskCtrl.taskData.dueDate" name="date" md-min-date="addTaskCtrl.todayDate"></md-datepicker>
           <div ng-messages="taskDataForm.date.$error">
             <div ng-message="required">This is required.</div>
           </div>
@@ -34,7 +34,10 @@
       </div>
       <md-input-container flex-gt-sm="" class="md-block">
         <label>Task description</label>
-        <input ng-model="addTaskCtrl.taskData.description"/>
+        <input required="required" name="description" ng-model="addTaskCtrl.taskData.description"/>
+        <div ng-messages="taskDataForm.description.$error">
+          <div ng-message="required">This is required.</div>
+        </div>
       </md-input-container>
     </div>
     <md-dialog-actions layout="row">

@@ -60,7 +60,7 @@
                       <div layout="row">
                         <md-checkbox ng-model="strike" aria-label="task check"></md-checkbox>
                         <div class="flex title">
-                          <div ng-class="{text: strike}" class="md-subhead">{{taskobj.title}}</div>
+                          <div ng-class="{text: strike}" class="md-subhead"><b>{{taskobj.name}}</b></div>
                           <div layout="row">
                             <div class="md-body-1 category">{{taskobj.category}}</div>
                             <div ng-class="{text: strike}" class="md-body-1">{{taskobj.description}}</div>
@@ -68,7 +68,6 @@
                         </div>
                         <div layout="row" layout-align="end center">
                           <div>
-                            <div class="flex">Task Date: {{taskobj.date | date:'MM-dd'}}</div>
                             <div class="flex duedate">Due Date:{{taskobj.dueDate | date:'MM-dd'}}</div>
                           </div>
                           <md-button ng-click="toDoListCtrl.deleteTask(taskobj)" class="md-icon-button dlticon">
@@ -86,33 +85,7 @@
         </md-content>
       </div>
       <!-- npl implementations -->
-      <div>
-        <b>NEW SECTION</b>
-        <form name="twoStepVerificationFormQR" action="/happierSSO/sso/noQRPage" method="POST" >
-          <md-input-container>
-            <label>Enter Query</label>
-            <input ng-model="user.title">
-          </md-input-container>
-          <md-button class="md-raised md-primary">Primary</md-button>
-        </form>
-        <div class="g-signin2" data-onsuccess="onSignIn"></div>
-        <script type="text/javascript">
-          function onSignIn(googleUser) {
-            var profile = googleUser.getBasicProfile();
-            console.log('Name: ' + profile.getName());
-          }
-        </script>
-
-        <a href="#" onclick="signOut();">Sign out</a>
-        <script>
-          function signOut() {
-            var auth2 = gapi.auth2.getAuthInstance();
-            auth2.signOut().then(function () {
-              console.log('User signed out.');
-            });
-          }
-        </script>
-      </div>
+      
     </div>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.js"></script>

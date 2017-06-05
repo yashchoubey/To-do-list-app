@@ -8,8 +8,7 @@ angular.module('toDoList')
         title: '',
         description: '',
         category: '',
-        dueDate: new Date(),
-        date: new Date()
+        dueDate: '',
     };
     /************************************** controller *********************************************/
     return {

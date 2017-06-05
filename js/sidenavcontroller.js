@@ -1,4 +1,3 @@
-
 angular.module('toDoList').controller('sideNavController',["$mdSidenav","$mdDialog","toDoService","$http", function ($mdSidenav,$mdDialog,toDoService,$http) {
     /************************************** view *********************************************/
     var self=this;
